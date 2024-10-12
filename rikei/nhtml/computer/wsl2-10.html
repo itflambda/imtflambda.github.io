@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+<html lang="ja">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="../../css/css.css">
+</head>
+<body >
+<div class="base">
+<div class="hidari">
+	<iframe src="../../../nhtml/profile.html" width="100%" height="52%"></iframe>
+	<iframe src="../../nhtml/menu.html" width="100%" height="30%"></iframe>
+	<iframe src="https://free.timeanddate.com/clock/i8pob63s/n248/szw110/szh110/hoc222/hbw6/cf100/hgr0/hcw2/hcd88/fan2/fas20/fnu2/fdi70/mqc000/mqs3/mql13/mqw4/mqd94/mhc000/mhs3/mhl13/mhw4/mhd94/mmc000/mml5/mmw1/mmd94/hwm1/hhs2/hhb18/hms2/hml80/hmb18/hmr7/hsc000/hss2/hsl90/hsr3" frameborder="0" width="110" height="110"></iframe>
+</div>
+<div class="migi">
+<h1>WSL2でUbuntu・Fedoraを使用する</h1>
+<div class="honbun">
+<h4>・WSL2について</h4>
+<div class="honbun2">
+　Windows上でLinuxを動かすとき、大抵の場合VirtualBoxやVMWare、またはWindowsのHyper-Vなどの仮想マシン上に目的のOSをインストールすることになるが、"Windows Subsystem for Linux 2"(WSL2)という機能でWindows上で簡易的にLinuxを動かすことができる。<br>
+　VirtualBoxの時などとは異なり、共有フォルダーの設定をしなくてもゲストOSとホストOS間でファイルのやり取りが行えるので非常に助かる場合がある。今回はWindows10上のWSL2の導入方法とUbuntu、Fedoraのインストール法を解説する。(Windows11は手持ちの電算機にはないので今回は解説しない。)<br>
+</div>
+</div>
+<div class="honbun">
+<h4>・WSL2のインストール</h4>
+<div class="honbun2">
+　Windows10においてWSL2をインストールするときのwindowsのバージョンは、x64の中央処理装置では1903以降、ARM64は2004以降であることが必要になる。32bitの電算機では残念ながらインストールは(少なくとも正攻法では)できない。<br>
+　適宜な更新が済んだら、まずwindowsの機能を拡張する。<br>
+①Windowsキー+Rを押し、controlと入力。<br>
+　<img src="./img/wsl2-10-1.png" width="30%"><br>
+②コントロールパネルが開かれるので、プログラム→Windowsの機能の有効化または無効化の順に進む。<br>
+　<img src="./img/wsl2-10-2.png" width="40%">
+　<img src="./img/wsl2-10-3.png" width="40%"><br>
+③Linux用Windowsサブシステム・仮想マシンプラットフォームにチェックを入れる。この後再起動が促されるのでそれに従う。<br>
+　<img src="./img/wsl2-10-4.png" width="30%"><br>
+④次に、MSのサイトから<a href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"  target="_blank">Linux用カーネル</a>をダウンロードし、インストールする。以下のような画面になれば成功。<br>
+　<img src="./img/wsl2-10-5.jpg" width="40%"><br>
+⑤最後に、WSLのバージョンを2に変更するため、Powershellで<br>
+　　wsl --set-default-version 2<br>
+を入力し、実行する。<br>
+　<img src="./img/wsl2-10-5-1.jpg" width="50%"><br>
+以上でWSL2の導入は完了するので、この先はOSをインストールする。
+</div>
+</div>
+<div class="honbun">
+<h4>・Ubuntuのインストール</h4>
+<div class="honbun2">
+①MS Storeを開き、Ubuntuを検索しインストールする。ここでは、Windows Terminalというコマンドプロント・Powerchell・Ubuntuを一括管理できるターミナルも入れる。<br>
+　<img src="./img/wsl2-10-6.png" width="40%"><br>
+②Ubuntu(またはWindows Terminalのプラスボタンの右のボタンよりUbuntu)を開いてユーザー名、パスワードを設定すれば完了。<br>
+　<img src="./img/wsl2-10-7.jpg" width="40%"><br>
+　あとは、普通に使えば良いので、ここでは試しにneofetchを入れてみる。<br>
+通常は<br>
+　　<i><b>sudo apt update && sudo apt install neofetch</i></b> <br>
+で、インストールができるが、ディスク領域を圧迫したくないときは、<br>
+　　<i><bs>sudo apt update && sudo apt install neofetch <font color="FF5500">--no-install-recommends </font></i></b><br>
+で、推奨パッケージのインストールをケチるという手がある。<br>
+これでneofetchを実行すると、<br>
+　<img src="./img/wsl2-10-8.jpg" width="40%"><br>
+という感じでUbuntuのロゴのアスキーアートが表示される。(しっかりWindows上で動いているということまで表示される。)<br><br>
+　因みに、windows上のファイルにアクセスしたい場合は、例えばCドライブのときは、<br>
+　　cd /mnt/c/<br>
+でアクセス出来る。<br>
+</div>
+</div>
+<div class="honbun">
+<h4>・Fedoraのインストール</h4>
+<div class="honbun2">
+　最新の技術を試したい人や、RedHatなどを使い慣れたベテランであれば、Fedoraをインストールしたいかもしれない。しかし、Debian、OpenSUSE、KaliLinuxなどと異なり、Fedora(Remix)はMS Storeでは有料となっている。<br>
+　然し、<a href="https://github.com/WhitewaterFoundry/Fedora-Remix-for-WSL"  target="_blank">開発元のGithub</a>の<a href="https://github.com/WhitewaterFoundry/Fedora-Remix-for-WSL#isnt-fedora-free"  target="_blank">Isn't fedora free?</a>を見ると一応無料版も公開されていることが分かる。ここからダウンロードできるmsixbundleファイルをインストールすれば、fedoraの導入も可能であるということだ。
+</div>
+</div>
+<div class="honbun">
+<h4>・追記(2023/04/20)</h4>
+<div class="honbun2">
+　Windows 10のより最新のバージョン(22H2以降?)やWindows 11ではより簡単にインスト－ルできる模様。<br>
+　あと、<i><b>wsl --update</i></b>を実行しないとGUIのLinuxアプリケーションが動かない。但し、Win10の場合は22H2かそのぐらいのバージョンでないとエラーが出るので参考までに。
+</div>
+</div>
+<div class="honbun">
+<h4>・参考</h4>
+<div class="honbun2">
+<a href="https://learn.microsoft.com/ja-jp/windows/wsl/install-manual" target="_blank">以前のバージョンの WSL の手動インストール手順 --- Microsoft</a><br>
+<a href="https://qiita.com/Uchitaso/items/6e0a7859e87bb8bdb527" target="_blank">wsl2でよく使う、windowsとlinux間のファイル移動やコマンド実行。--- Uchitaso (Qitta)</a><br>
+<a href="https://github.com/WhitewaterFoundry/Fedora-Remix-for-WSL" target="_blank">WhitewaterFoundry/Fedora-Remix-for-WSL ---WhiteWaterFundory (Github)</a><br>
+<a href="https://qiita.com/betarium/items/640534d190e4f78b2b4e" target="_blank">WSLでFedoraを起動する --- betarium (Qitta)</a><br>
+</div>
+</div>
+<div class="koushin">
+記事作成日:2023/03/25<br>
+最終更新日:2024/09/12<br>
+執筆：虚時間fλ
+
+</div>
+</div>
+</div>
+</div>
+</body>
